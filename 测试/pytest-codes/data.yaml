@@ -1,0 +1,25 @@
+name: "zhangsan"
+name2: zhangsan
+address: {"name":"sh","mobile":"13812345678"}
+address2:
+  name: bj
+  mobile: 13912345678
+scores: [10,20,30]
+scores2:
+  - 20
+  - 30
+  - 100
+value1: "xxx"
+value2: 20
+value3: 100.123123
+value4: ~
+value5: true
+value6: false
+value7: 2020-10-24 17:06:25
+anchor: &imp
+  name: lisi
+  age: 100
+  mobile: 13812345678
+monitor:
+  name: wangwu
+  <<: *imp

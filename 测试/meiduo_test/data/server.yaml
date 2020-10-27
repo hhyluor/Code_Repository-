@@ -1,0 +1,3 @@
+schema: http
+domain: localhost
+port: 8000

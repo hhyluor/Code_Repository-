@@ -1,0 +1,2 @@
+path: "/usernames/{username}/count/"
+names: [ "zhangsan","lisi1234","wangwu","root1234","admin1234" ]
