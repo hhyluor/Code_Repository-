@@ -3,8 +3,8 @@
 
 import pytest
 
-from meiduo_test.utils.data import YamlData
-from meiduo_test.utils.request import get
+from utils.data import YamlData
+from utils.request import get
 
 
 # 读取测试的数据

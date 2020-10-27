@@ -1,7 +1,7 @@
 import os
 import yaml
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))#获取绝对路径
 
 
 # # os.path.join(BASE_DIR, 'data' ,'users/username.yaml')
@@ -29,7 +29,7 @@ class YamlData():
         :param file_rel_path: users/username.yaml
         :return:
         """
-        file_abs_path = os.path.join(BASE_DIR, 'data', file_rel_path)
+        file_abs_path = os.path.join(BASE_DIR, 'data', file_rel_path)#拼接路径
         with open(file_abs_path) as f:
-            data = yaml.load(f, Loader=yaml.FullLoader)
+            data = yaml.load(f, Loader=yaml.FullLoader)#解析Yaml
             return data
