@@ -15,7 +15,7 @@ import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # 内层`meiduo_mall`目录
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))#项目路径
 
 # sys.path: 导包路径: []
 # 将`apps`添加到项目的搜索包目录列表
@@ -23,21 +23,23 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'wl=vg@sjvgm$dy!+p6$)oqh5k$#s1t&0bz7)gegdq9qta6%r-d'
-
+# 是一个随机值，在项目创建的时候自动生成，通常无需修改。主要用于重要数据的加密处理，
+# 提高系统安全性。主要用于用户密码，CSRF机制（表单提交），会话session等数据加密。
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # 允许访问的host地址白名单:
 ALLOWED_HOSTS = ['*']
-
+# 设置可访问的域名，默认为空。DEBUG=True同时ALLOWD_HOSTS为空代表项目只允许以localhost或者127.0.0.1在浏览器上访问。
+# DEBUG=False时ALLOWD_HOSTS为必填项，设置为ALLOWD_HOSTS=[‘xxx.xxx.xxx.xxx’]
 # Application definition
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.admin',#内置的后台管理系统
+    'django.contrib.auth',#内置的用户认证系统
+    'django.contrib.contenttypes',#记录项目中的model元数据
+    'django.contrib.sessions',#Session会话功能，用于标识访问网站的用户身份信息
+    'django.contrib.messages',#消息提示功能
+    'django.contrib.staticfiles',#查找静态资源路径
     'corsheaders',
      # 定时任务
     'django_crontab',
@@ -61,23 +63,25 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     # 添加 django-cors-headers 使其可以进行 cors 跨域
     'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.security.SecurityMiddleware',#内置安全机制，保护用户与网站通信安全
+    'django.contrib.sessions.middleware.SessionMiddleware',#会话Session功能
+    'django.middleware.common.CommonMiddleware',#处理请求信息，规范化请求内容
+    # 'django.middleware.csrf.CsrfViewMiddleware',#开启CSRF防护功能
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.local.LocalMiddleware',
+# 在MIDDLEWARE中添加LocalMiddleware中间件，使得Django内置功能支持中文显示，
 ]
 
-ROOT_URLCONF = 'meiduo_mall.urls'
+ROOT_URLCONF = 'meiduo_mall.urls'#它告诉Django哪个Python模块应该用作本站的URLConf
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',#模板引擎，用于识别模板中的变量和指令
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],#设置模板所在路径，告诉Django模板位置,把app的templates路径要家进来
+        'APP_DIRS': True,#是否在App文件中查找模板文件,在app的templates包里找模板
+        'OPTIONS': {#RequestContex中上下文的调用函数，通常不做修改
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -97,13 +101,18 @@ WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 DATABASES = {
     'default': { # 写入
         'ENGINE': 'django.db.backends.mysql',
+# 数据库引擎用于实现项目与数据库的连接，Django提供四种数据库引擎：
+                    # django.db.backends.postgresql
+                    # django.db.backends.mysql
+                    # django.db.backends.sqlite3
+                    # django.db.backends.oracle
         'HOST': '0.0.0.0',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': 'mysql',
         'NAME': 'meiduo_db',
         'TEST':{
-            'CHARSET':'utf8',
+            'CHARSET':'utf8',    #设置默认编码
             'COLLATION':'utf8_general_ci'
         }
     },
@@ -116,6 +125,8 @@ DATABASES = {
     #     'NAME': 'meiduo_db',
     # }
 }
+
+
 
 # DATABASE_ROUTERS = ['meiduo_mall.utils.db_router.MasterSlaveDBRouter']
 
@@ -156,6 +167,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# 上述配置将静态资源存放在文件夹static，这个文件夹只能放在App里面。
+# 项目启动时，Django根据静态资源存放路径查找相关文件，查找功能由App列表INSTALLED_APPS的staticfiles实现。
+# 在index App中添加‘python package’并放置文件。
 
 # redis的配置:
 CACHES = {
